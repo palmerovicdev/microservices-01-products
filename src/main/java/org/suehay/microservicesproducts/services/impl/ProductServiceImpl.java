@@ -25,7 +25,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse update(Long id, ProductRequest product) {
         log.info("Updating product with id {}: {}", id, product);
-        return ProductResponse.fromEntity(this.productRepository.updateById(product.toEntity(), id));
+        var productEntity=productRepository.findById(id).orElseThrow();
+        productEntity.setName(product.getName());
+        productEntity.setDescription(product.getDescription());
+        productEntity.setPrice(product.getPrice());
+        productEntity.setSku(product.getSku());
+        productEntity.setStatus(product.getStatus());
+        return ProductResponse.fromEntity(this.productRepository.save(productEntity));
     }
 
     @Override
