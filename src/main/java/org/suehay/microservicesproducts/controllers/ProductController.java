@@ -10,7 +10,7 @@ import org.suehay.microservicesproducts.model.response.ProductResponse;
 import org.suehay.microservicesproducts.services.ProductService;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
