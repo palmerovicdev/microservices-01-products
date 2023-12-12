@@ -3,6 +3,7 @@ package org.suehay.microservicesproducts.services.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.suehay.microservicesproducts.model.entities.ProductEntity;
 import org.suehay.microservicesproducts.model.request.ProductRequest;
 import org.suehay.microservicesproducts.model.response.ProductResponse;
 import org.suehay.microservicesproducts.repositories.ProductRepository;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse update(Long id, ProductRequest product) {
         log.info("Updating product with id {}: {}", id, product);
-        var productEntity=productRepository.findById(id).orElseThrow();
+        var productEntity=productRepository.findById(id).orElse(new ProductEntity());
         productEntity.setName(product.getName());
         productEntity.setDescription(product.getDescription());
         productEntity.setPrice(product.getPrice());
@@ -37,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse findById(Long id) {
         log.info("Finding product with id {}", id);
-        return ProductResponse.fromEntity(this.productRepository.findById(id).orElseThrow());
+        return ProductResponse.fromEntity(this.productRepository.findById(id).orElse(new ProductEntity()));
     }
 
     @Override
